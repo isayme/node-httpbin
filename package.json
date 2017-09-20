@@ -1,0 +1,26 @@
+{
+  "name": "express-boilerplate",
+  "version": "0.1.0",
+  "description": "a express application boilerplate",
+  "main": "app/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isayme/express-boilerplate.git"
+  },
+  "keywords": [
+    "express",
+    "boilerplate"
+  ],
+  "author": "iSayme <isaymeorg@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/isayme/express-boilerplate/issues"
+  },
+  "homepage": "https://github.com/isayme/express-boilerplate#readme"
+}
