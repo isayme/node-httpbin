@@ -2,9 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
 const winston = require('winston')
+const morgan = require('morgan')
 
 const app = express()
 
+app.use(morgan('dev'))
 app.use(bodyParser.json())
 
 app.use('/version', require('./router/version'))
