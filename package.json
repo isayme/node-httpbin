@@ -10,6 +10,7 @@
     "test": "mocha",
     "pretest": "npm run lint",
     "lint": "standard --env=mocha",
+    "pretty": "prettier-standard 'app/**/*.js' 'test/**/*.js'",
     "coverage": "NODE_ENV=test istanbul cover _mocha 'test/**/*.js'"
   },
   "repository": {
@@ -36,6 +37,7 @@
     "istanbul": "^0.4.5",
     "mocha": "^3.5.3",
     "power-assert": "^1.4.4",
+    "prettier-standard": "^6.0.0",
     "standard": "^10.0.3",
     "supertest": "^3.0.0"
   }
