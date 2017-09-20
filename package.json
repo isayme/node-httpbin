@@ -12,7 +12,8 @@
     "pretest": "npm run lint",
     "lint": "standard --env=mocha",
     "pretty": "prettier-standard 'app/**/*.js' 'test/**/*.js'",
-    "coverage": "NODE_ENV=test istanbul cover _mocha 'test/**/*.js'"
+    "coverage": "NODE_ENV=test istanbul cover _mocha 'test/**/*.js'",
+    "coveralls": "cat ./coverage/lcov.info | coveralls"
   },
   "engines": {
     "node": ">=6"
@@ -40,6 +41,7 @@
   },
   "devDependencies": {
     "co-mocha": "^1.2.0",
+    "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
     "mocha": "^3.5.3",
     "nodemon": "^1.12.1",
