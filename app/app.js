@@ -7,14 +7,7 @@ const app = express()
 
 app.use(bodyParser.json())
 
-app.get('/version', function (req, res) {
-  res.json({
-    name: pkg.name,
-    version: pkg.version,
-    author: pkg.author,
-    license: pkg.license
-  })
-})
+app.use('/version', require('./router/version'))
 
 app.use(require('./middleware/error-handler'))
 
