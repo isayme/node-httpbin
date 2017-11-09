@@ -1,4 +1,6 @@
 module.exports = {
   port: 8080,
-  cors: []
+  cors: [
+    'http://a.com'
+  ]
 }

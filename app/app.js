@@ -12,6 +12,8 @@ app.use(partialResponse())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+app.use(require('./middleware/cors'))
+
 app.use('/version', require('./router/version'))
 
 app.use(require('./middleware/error-handler'))
