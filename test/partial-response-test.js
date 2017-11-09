@@ -6,9 +6,6 @@ describe('partial-response', () => {
   it('should ok', function * () {
     let res = yield request(app).get('/version?fields=name,version')
     assert.equal(res.statusCode, 200)
-    assert.deepEqual(Object.keys(res.body), [
-      'name',
-      'version'
-    ])
+    assert.deepEqual(Object.keys(res.body), ['name', 'version'])
   })
 })
