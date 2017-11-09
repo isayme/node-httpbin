@@ -1,3 +1,4 @@
+const config = require('config')
 const request = require('supertest')
 const assert = require('power-assert')
 const app = require('../app/app')
@@ -19,5 +20,16 @@ describe('cors', () => {
       .set('origin', originHost)
 
     assert(res.headers['access-control-allow-origin'] === undefined)
+  })
+
+  it('should fail if invalid config', function * () {
+    let configCORS = config.cors
+    config.cors = ['[(']
+    let originHost = 'http://b.com'
+    let res = yield request(app)
+      .get('/version')
+      .set('origin', originHost)
+    assert(res.statusCode === 500)
+    config.cors = configCORS
   })
 })
