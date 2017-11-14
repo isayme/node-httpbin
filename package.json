@@ -7,6 +7,7 @@
     "test": "test"
   },
   "scripts": {
+    "start": "NODE_ENV=production node app/app.js",
     "dev": "NODE_ENV=dev nodemon app/app.js",
     "test": "NODE_ENV=test mocha",
     "pretest": "npm run lint",
