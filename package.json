@@ -52,5 +52,8 @@
     "prettier-standard": "^6.0.0",
     "standard": "^10.0.3",
     "supertest": "^3.0.0"
+  },
+  "standard": {
+    "env": ["mocha"]
   }
 }
