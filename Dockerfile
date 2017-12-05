@@ -11,6 +11,6 @@ FROM node:6.12.0-alpine
 
 WORKDIR /app
 COPY . /app
-COPY --from=builder /tmp/node_modules ./
+COPY --from=builder /tmp/node_modules ./node_modules
 
 CMD npm start
