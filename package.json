@@ -7,14 +7,13 @@
     "test": "test"
   },
   "scripts": {
-    "start": "NODE_ENV=production node app/app.js",
+    "start": "node app/app.js",
     "dev": "NODE_ENV=dev nodemon app/app.js",
-    "test": "NODE_ENV=test mocha",
+    "test": "NODE_ENV=test nyc mocha",
     "pretest": "npm run lint",
-    "lint": "standard --env=mocha",
-    "pretty": "prettier-standard 'app/**/*.js' 'test/**/*.js'",
-    "coverage": "NODE_ENV=test istanbul cover _mocha 'test/**/*.js'",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "lint": "standard",
+    "prettier": "prettier-standard 'app/**/*.js' 'test/**/*.js'",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
     "node": ">=6"
@@ -45,15 +44,17 @@
   "devDependencies": {
     "co-mocha": "^1.2.0",
     "coveralls": "^2.13.1",
-    "istanbul": "^0.4.5",
     "mocha": "^3.5.3",
     "nodemon": "^1.12.1",
+    "nyc": "^11.4.1",
     "power-assert": "^1.4.4",
     "prettier-standard": "^6.0.0",
     "standard": "^10.0.3",
     "supertest": "^3.0.0"
   },
   "standard": {
-    "env": ["mocha"]
+    "env": [
+      "mocha"
+    ]
   }
 }
