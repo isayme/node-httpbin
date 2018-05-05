@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": [
+    "app/**/*.js",
+    "test/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    ".git",
+    ".vscode",
+    "coverage"
+  ]
+}
