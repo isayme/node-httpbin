@@ -33,13 +33,13 @@
   },
   "homepage": "https://github.com/isayme/express-boilerplate#readme",
   "dependencies": {
+    "app-module-path": "^2.2.0",
     "body-parser": "^1.18.1",
     "config": "^1.26.2",
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-partial-response": "^0.3.4",
-    "morgan": "^1.8.2",
-    "winston": "^2.3.1"
+    "pino": "^4.16.1"
   },
   "devDependencies": {
     "co-mocha": "^1.2.0",

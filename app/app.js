@@ -1,13 +1,15 @@
+const path = require('path')
+require('app-module-path').addPath(path.resolve(__dirname, '..'))
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const config = require('config')
-const winston = require('winston')
-const morgan = require('morgan')
+const logger = require('app/logger')
 const partialResponse = require('express-partial-response')
 
 const app = express()
 
-app.use(morgan('dev'))
+app.use(require('app/middleware/logger'))
 app.use(partialResponse())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -19,7 +21,8 @@ app.use('/version', require('./router/version'))
 app.use(require('./middleware/error-handler'))
 
 const server = app.listen(config.port, () => {
-  winston.info('listen ok, address:', server.address())
+  const address = server.address()
+  logger.info(`listen ${address.address}:${address.port}`)
 })
 
 module.exports = app
