@@ -39,6 +39,7 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-partial-response": "^0.3.4",
+    "lodash": "^4.17.10",
     "pino": "^4.16.1",
     "request-ip": "^2.0.2",
     "uuid": "^3.2.1"
