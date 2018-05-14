@@ -39,7 +39,8 @@
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-partial-response": "^0.3.4",
-    "pino": "^4.16.1"
+    "pino": "^4.16.1",
+    "request-ip": "^2.0.2"
   },
   "devDependencies": {
     "co-mocha": "^1.2.0",
