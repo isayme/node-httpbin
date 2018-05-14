@@ -1,5 +1,5 @@
 {
-  "name": "express-boilerplate",
+  "name": "@isayme/httpbin",
   "version": "0.1.0",
   "description": "a express application boilerplate",
   "main": "app/app.js",
