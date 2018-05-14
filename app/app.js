@@ -9,6 +9,7 @@ const partialResponse = require('express-partial-response')
 
 const app = express()
 
+app.use(express.static('public'))
 app.use(require('app/middleware/logger'))
 app.use(partialResponse())
 app.use(bodyParser.json())
