@@ -1,4 +1,5 @@
 const requestIP = require('request-ip')
+const uuidv4 = require('uuid/v4')
 
 const express = require('express')
 const router = express.Router()
@@ -6,6 +7,12 @@ const router = express.Router()
 router.get('/ip', function (req, res) {
   res.json({
     origin: requestIP.getClientIp(req) || 'unknown'
+  })
+})
+
+router.get('/uuid', function (req, res) {
+  res.json({
+    uuid: uuidv4()
   })
 })
 
