@@ -5,7 +5,7 @@ const router = express.Router()
 
 router.get('/ip', function (req, res) {
   res.json({
-    ip: requestIP.getClientIp(req) || 'unknown'
+    origin: requestIP.getClientIp(req) || 'unknown'
   })
 })
 
