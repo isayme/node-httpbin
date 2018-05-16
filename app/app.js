@@ -11,11 +11,14 @@ const app = express()
 
 app.use(express.static('public'))
 app.use(require('app/middleware/logger'))
+app.use(require('app/middleware/context'))
 app.use(partialResponse())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.text())
 
 app.use(require('./middleware/cors'))
+app.use(require('./middleware/multer'))
 
 app.use('/version', require('./router/version'))
 app.use(require('./router/httpbin'))
