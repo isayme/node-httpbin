@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const uuid = require('app/util/uuid')
+const base64 = require('app/util/base64')
 
 router.get('/ip', function (req, res) {
   res.json({
@@ -100,6 +101,11 @@ router.all('/anything/:anything?', function (req, res) {
     origin: req.ctx.ip,
     url: req.ctx.url
   })
+})
+
+router.get('/base64/:encoded', (req, res) => {
+  const encoded = req.param('encoded')
+  res.send(base64.decode(encoded))
 })
 
 module.exports = router
