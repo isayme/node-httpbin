@@ -5,7 +5,8 @@ const router = express.Router()
 
 const _ = require('lodash')
 const brotli = require('iltorb')
-
+const accepts = require('accepts')
+const mime = require('mime-types')
 const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
 
@@ -273,6 +274,67 @@ router.get('/cookies/delete', (req, res) => {
   }
 
   res.redirect('/cookies')
+})
+
+router.get('/image', (req, res) => {
+  const accept = accepts(req)
+
+  let acceptType = accept.type(['jpg', 'jpeg', 'webp', 'svg', 'png', 'image/*'])
+
+  let file
+  switch (acceptType) {
+    case 'jpg':
+    case 'jpeg':
+      file = 'jackal.jpg'
+      break
+    case 'svg':
+      file = 'svg_logo.svg'
+      break
+    case 'webp':
+      file = 'wolf_1.webp'
+      break
+    case 'image/*':
+      acceptType = 'png' // default to png
+      // falls through
+    case 'png':
+      file = 'pig_icon.png'
+      break
+    default:
+      return res.status(406).end()
+  }
+
+  res.setHeader('Content-Type', mime.types[acceptType])
+  res.sendFile(file, {
+    root: './public/images'
+  })
+})
+
+router.get('/image/png', (req, res) => {
+  res.setHeader('Content-Type', mime.types.png)
+  res.sendFile('pig_icon.png', {
+    root: './public/images'
+  })
+})
+
+router.get('/image/jpeg', (req, res) => {
+  res.setHeader('Content-Type', mime.types.jpg)
+  res.sendFile('jackal.jpg', {
+    root: './public/images'
+  })
+})
+
+router.get('/image/webp', (req, res) => {
+  res.setHeader('Content-Type', mime.types.webp)
+  res.sendFile('wolf_1.webp', {
+    root: './public/images'
+  })
+})
+
+router.get('/image/svg', (req, res) => {
+  res.setHeader('Content-Type', mime.types.svg)
+  res.sendFile('svg_logo.svg', {
+    root: './public/images'
+  })
 })
 
 router.get('/xml', (req, res) => {
