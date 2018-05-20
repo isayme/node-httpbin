@@ -36,6 +36,7 @@
     "app-module-path": "^2.2.0",
     "body-parser": "^1.18.1",
     "config": "^1.26.2",
+    "cookie-parser": "^1.4.3",
     "cors": "^2.8.4",
     "express": "^4.15.4",
     "express-partial-response": "^0.3.4",

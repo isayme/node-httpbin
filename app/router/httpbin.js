@@ -210,4 +210,10 @@ router.all('/response-headers', (req, res) => {
   res.json(query)
 })
 
+router.get('/cookies', (req, res) => {
+  res.json({
+    cookies: req.ctx.cookies
+  })
+})
+
 module.exports = router

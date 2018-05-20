@@ -62,6 +62,10 @@ class Context {
       return files
     }, {})
   }
+
+  get cookies () {
+    return this.req.cookies
+  }
 }
 
 module.exports = Context
