@@ -2,6 +2,8 @@ const zlib = require('zlib')
 const express = require('express')
 const router = express.Router()
 
+const brotli = require('iltorb')
+
 const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
 
@@ -150,6 +152,28 @@ router.get('/deflate', (req, res, next) => {
       method: req.ctx.method,
       origin: req.ctx.ip
     }),
+    (err, result) => {
+      if (err) {
+        return next(err)
+      }
+
+      res.end(result)
+    }
+  )
+})
+
+router.get('/brotli', (req, res, next) => {
+  res.setHeader('Content-Encoding', 'br')
+  res.removeHeader('Content-Length')
+  res.setHeader('Content-Type', 'application/json')
+
+  brotli.compress(
+    Buffer.from(JSON.stringify({
+      brotli: true,
+      headers: req.ctx.headers,
+      method: req.ctx.method,
+      origin: req.ctx.ip
+    })),
     (err, result) => {
       if (err) {
         return next(err)
