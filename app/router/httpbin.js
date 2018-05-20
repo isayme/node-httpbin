@@ -115,8 +115,8 @@ router.get('/base64/:encoded', (req, res) => {
 
 router.get('/encoding/utf8', (req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=UTF-8')
-  res.sendFile('public/UTF-8-demo.txt', {
-    root: '.'
+  res.sendFile('UTF-8-demo.txt', {
+    root: './public'
   })
 })
 
@@ -273,6 +273,13 @@ router.get('/cookies/delete', (req, res) => {
   }
 
   res.redirect('/cookies')
+})
+
+router.get('/xml', (req, res) => {
+  res.setHeader('Content-Type', 'application/xml')
+  res.sendFile('sample.xml', {
+    root: './public'
+  })
 })
 
 module.exports = router
