@@ -9,6 +9,7 @@ const accepts = require('accepts')
 const mime = require('mime-types')
 const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
+const constants = require('app/constants')
 
 router.get('/ip', function (req, res) {
   res.json({
@@ -115,7 +116,7 @@ router.get('/base64/:encoded', (req, res) => {
 })
 
 router.get('/encoding/utf8', (req, res) => {
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8')
+  res.setHeader(constants.HTTPHeaderContentType, 'text/html; charset=UTF-8')
   res.sendFile('UTF-8-demo.txt', {
     root: './public'
   })
@@ -124,7 +125,7 @@ router.get('/encoding/utf8', (req, res) => {
 router.get('/gzip', (req, res, next) => {
   res.setHeader('Content-Encoding', 'gzip')
   res.removeHeader('Content-Length')
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   zlib.gzip(
     JSON.stringify({
@@ -146,7 +147,7 @@ router.get('/gzip', (req, res, next) => {
 router.get('/deflate', (req, res, next) => {
   res.setHeader('Content-Encoding', 'deflate')
   res.removeHeader('Content-Length')
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   zlib.deflate(
     JSON.stringify({
@@ -168,7 +169,7 @@ router.get('/deflate', (req, res, next) => {
 router.get('/brotli', (req, res, next) => {
   res.setHeader('Content-Encoding', 'br')
   res.removeHeader('Content-Length')
-  res.setHeader('Content-Type', 'application/json')
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   brotli.compress(
     Buffer.from(JSON.stringify({
@@ -303,42 +304,42 @@ router.get('/image', (req, res) => {
       return res.status(406).end()
   }
 
-  res.setHeader('Content-Type', mime.types[acceptType])
+  res.setHeader(constants.HTTPHeaderContentType, mime.types[acceptType])
   res.sendFile(file, {
     root: './public/images'
   })
 })
 
 router.get('/image/png', (req, res) => {
-  res.setHeader('Content-Type', mime.types.png)
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.png)
   res.sendFile('pig_icon.png', {
     root: './public/images'
   })
 })
 
 router.get('/image/jpeg', (req, res) => {
-  res.setHeader('Content-Type', mime.types.jpg)
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.jpg)
   res.sendFile('jackal.jpg', {
     root: './public/images'
   })
 })
 
 router.get('/image/webp', (req, res) => {
-  res.setHeader('Content-Type', mime.types.webp)
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.webp)
   res.sendFile('wolf_1.webp', {
     root: './public/images'
   })
 })
 
 router.get('/image/svg', (req, res) => {
-  res.setHeader('Content-Type', mime.types.svg)
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.svg)
   res.sendFile('svg_logo.svg', {
     root: './public/images'
   })
 })
 
 router.get('/xml', (req, res) => {
-  res.setHeader('Content-Type', 'application/xml')
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.xml)
   res.sendFile('sample.xml', {
     root: './public'
   })
