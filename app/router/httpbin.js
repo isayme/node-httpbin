@@ -199,4 +199,15 @@ router.all('/status/:code', (req, res) => {
   })
 })
 
+router.all('/response-headers', (req, res) => {
+  const query = req.ctx.query
+
+  for (let key in query) {
+    let val = query[key]
+    res.setHeader(key, `${val}`)
+  }
+
+  res.json(query)
+})
+
 module.exports = router
