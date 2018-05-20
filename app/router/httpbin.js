@@ -216,4 +216,24 @@ router.get('/cookies', (req, res) => {
   })
 })
 
+router.get('/cookies/set', (req, res) => {
+  const query = req.ctx.query
+
+  for (let key in query) {
+    res.cookie(key, `${query[key]}`)
+  }
+
+  res.redirect('/cookies')
+})
+
+router.get('/cookies/delete', (req, res) => {
+  const query = req.ctx.query
+
+  for (let key in query) {
+    res.clearCookie(key)
+  }
+
+  res.redirect('/cookies')
+})
+
 module.exports = router
