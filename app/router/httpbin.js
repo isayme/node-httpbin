@@ -3,6 +3,7 @@ const http = require('http')
 const express = require('express')
 const router = express.Router()
 
+const _ = require('lodash')
 const brotli = require('iltorb')
 
 const uuid = require('app/util/uuid')
@@ -208,6 +209,44 @@ router.all('/response-headers', (req, res) => {
   }
 
   res.json(query)
+})
+
+router.get(['/redirect/:n', '/relative-redirect/:n', '/absolute-redirect/:n'], (req, res) => {
+  const n = _.toInteger(req.param('n'))
+
+  if (!_.inRange(n, 1, 16)) {
+    res.status(400).end('`n` should be a number in [1, 15]')
+    return
+  }
+
+  if (n > 1) {
+    res.redirect(`/redirect/${n - 1}`)
+  } else {
+    res.redirect('/get')
+  }
+})
+
+router.all('/redirect-to', (req, res) => {
+  const query = req.ctx.query
+
+  const url = query.url
+  if (!url) {
+    res.status(400).end('query `url` required')
+    return
+  }
+
+  let code = _.toInteger(query.status_code)
+  // not exist
+  if (code === 0) {
+    code = 302
+  }
+
+  if (!_.inRange(code, 300, 400)) {
+    res.status(400).end('query `status_code` should be a number in [300, 400)')
+    return
+  }
+
+  res.redirect(code, url)
 })
 
 router.get('/cookies', (req, res) => {
