@@ -1,3 +1,4 @@
+const zlib = require('zlib')
 const express = require('express')
 const router = express.Router()
 
@@ -106,6 +107,50 @@ router.all('/anything/:anything?', function (req, res) {
 router.get('/base64/:encoded', (req, res) => {
   const encoded = req.param('encoded')
   res.send(base64.decode(encoded))
+})
+
+router.get('/gzip', (req, res, next) => {
+  res.setHeader('Content-Encoding', 'gzip')
+  res.removeHeader('Content-Length')
+  res.setHeader('Content-Type', 'application/json')
+
+  zlib.gzip(
+    JSON.stringify({
+      gzipped: true,
+      headers: req.ctx.headers,
+      method: req.ctx.method,
+      origin: req.ctx.ip
+    }),
+    (err, result) => {
+      if (err) {
+        return next(err)
+      }
+
+      res.end(result)
+    }
+  )
+})
+
+router.get('/deflate', (req, res, next) => {
+  res.setHeader('Content-Encoding', 'deflate')
+  res.removeHeader('Content-Length')
+  res.setHeader('Content-Type', 'application/json')
+
+  zlib.deflate(
+    JSON.stringify({
+      deflated: true,
+      headers: req.ctx.headers,
+      method: req.ctx.method,
+      origin: req.ctx.ip
+    }),
+    (err, result) => {
+      if (err) {
+        return next(err)
+      }
+
+      res.end(result)
+    }
+  )
 })
 
 module.exports = router
