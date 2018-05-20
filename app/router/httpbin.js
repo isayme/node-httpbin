@@ -109,6 +109,13 @@ router.get('/base64/:encoded', (req, res) => {
   res.send(base64.decode(encoded))
 })
 
+router.get('/encoding/utf8', (req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=UTF-8')
+  res.sendFile('public/UTF-8-demo.txt', {
+    root: '.'
+  })
+})
+
 router.get('/gzip', (req, res, next) => {
   res.setHeader('Content-Encoding', 'gzip')
   res.removeHeader('Content-Length')
