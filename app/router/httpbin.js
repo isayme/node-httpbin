@@ -1,4 +1,5 @@
 const zlib = require('zlib')
+const http = require('http')
 const express = require('express')
 const router = express.Router()
 
@@ -182,6 +183,20 @@ router.get('/brotli', (req, res, next) => {
       res.end(result)
     }
   )
+})
+
+router.all('/status/:code', (req, res) => {
+  const code = req.param('code')
+
+  const isValidCode = !!http.STATUS_CODES[code]
+  if (!isValidCode) {
+    return res.status(400).end(`invalid statuc code: ${code}`)
+  }
+
+  res.status(code).json({
+    code,
+    message: http.STATUS_CODES[code]
+  })
 })
 
 module.exports = router
