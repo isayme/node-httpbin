@@ -479,4 +479,22 @@ router.get('/cache/:value', (req, res) => {
   })
 })
 
+router.get('/delay/:delay', (req, res) => {
+  let delay = _.toInteger(req.param('delay'))
+  delay = _.min([delay, 10])
+
+  setTimeout(() => {
+    res.json({
+      args: req.ctx.query,
+      data: req.ctx.text,
+      files: req.ctx.files,
+      form: req.ctx.form,
+      headers: req.ctx.headers,
+      json: req.ctx.body,
+      origin: req.ctx.ip,
+      url: req.ctx.url
+    })
+  }, delay * 1000)
+})
+
 module.exports = router
