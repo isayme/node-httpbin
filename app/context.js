@@ -25,7 +25,7 @@ class Context {
   }
 
   get ua () {
-    return this.headers('user-agent') || constants.UnKnown
+    return this.headers['user-agent'] || constants.UnKnown
   }
 
   get query () {
