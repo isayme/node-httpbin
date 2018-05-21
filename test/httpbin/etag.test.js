@@ -3,7 +3,7 @@ const assert = require('power-assert')
 const app = require('app/app')
 const constants = require('app/constants')
 
-describe('etag', () => {
+describe('/etag', () => {
   it('default', function * () {
     let res = yield request(app).get('/etag/etag')
     assert.equal(res.statusCode, 200)
@@ -39,6 +39,7 @@ describe('etag', () => {
         .set(constants.HTTPHeaderIfNoneMatch, 'etag')
         .get('/etag/etag')
       assert.equal(res.statusCode, 304)
+      assert.equal(res.headers.etag, 'etag')
     })
 
     it('with *', function * () {
@@ -46,6 +47,7 @@ describe('etag', () => {
         .set(constants.HTTPHeaderIfNoneMatch, '*')
         .get('/etag/etag')
       assert.equal(res.statusCode, 304)
+      assert.equal(res.headers.etag, 'etag')
     })
 
     it('not match', function * () {

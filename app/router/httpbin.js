@@ -446,4 +446,36 @@ router.get('/etag/:etag', (req, res) => {
   })
 })
 
+router.get('/cache', (req, res) => {
+  const ifModifiedSince = req.header(constants.HTTPHeaderIfModifiedSince)
+  const ifNoneMatch = req.header(constants.HTTPHeaderIfNoneMatch)
+
+  if (ifModifiedSince || ifNoneMatch) {
+    res.status(304).end()
+    return
+  }
+
+  const now = new Date()
+  res.setHeader(constants.HTTPHeaderLastModified, now.toGMTString())
+  res.setHeader(constants.HTTPHeaderETag, uuid())
+  res.json({
+    args: req.ctx.query,
+    headers: req.ctx.headers,
+    origin: req.ctx.ip,
+    url: req.ctx.url
+  })
+})
+
+router.get('/cache/:value', (req, res) => {
+  const value = req.param('value')
+
+  res.setHeader(constants.HTTPHeaderCacheControl, _.toInteger(value))
+  res.json({
+    args: req.ctx.query,
+    headers: req.ctx.headers,
+    origin: req.ctx.ip,
+    url: req.ctx.url
+  })
+})
+
 module.exports = router
