@@ -352,4 +352,21 @@ router.get('/robots.txt', (res, req) => {
   })
 })
 
+router.get('/deny', (req, res) => {
+  const text = `
+          .-''''''-.
+        .' _      _ '.
+       /   O      O   \\
+      :                :
+      |                |
+      :       __       :
+       \\  .-"\`  \`"-.  /
+        '.          .'
+          '-......-'
+     YOU SHOULDN'T BE HERE
+  `
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.txt)
+  res.end(text)
+})
+
 module.exports = router
