@@ -1,1 +1,2 @@
+-r ./test/setup.js
 --exit
