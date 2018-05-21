@@ -414,4 +414,36 @@ router.get('/links/:n/:offset?', (req, res) => {
   ].join(''))
 })
 
+router.get('/etag/:etag', (req, res) => {
+  const etag = req.param('etag')
+
+  const ifMatch = req.header(constants.HTTPHeaderIfMatch)
+  if (ifMatch) {
+    const matches = ifMatch.split(',')
+    if (!matches.includes(etag) && !matches.includes('*')) {
+      res.status(412).end()
+      return
+    }
+  }
+
+  res.setHeader(constants.HTTPHeaderETag, etag)
+
+  let status = 200
+
+  const ifNoneMatch = req.header(constants.HTTPHeaderIfNoneMatch)
+  if (ifNoneMatch) {
+    const matches = ifNoneMatch.split(',')
+    if (matches.includes(etag) || matches.includes('*')) {
+      status = 304
+    }
+  }
+
+  res.status(status).json({
+    args: req.ctx.query,
+    headers: req.ctx.headers,
+    origin: req.ctx.ip,
+    url: req.ctx.url
+  })
+})
+
 module.exports = router
