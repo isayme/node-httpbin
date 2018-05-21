@@ -4,56 +4,56 @@ const app = require('app/app')
 const constants = require('app/constants')
 
 describe('/etag', () => {
-  it('default', function * () {
-    let res = yield request(app).get('/etag/etag')
+  it('default', async function () {
+    let res = await request(app).get('/etag/etag')
     assert.equal(res.statusCode, 200)
     assert.equal(res.headers.etag, 'etag')
   })
 
   describe('If-Match', () => {
-    it('normal', function * () {
-      let res = yield request(app)
+    it('normal', async function () {
+      let res = await request(app)
+        .get('/etag/etag')
         .set(constants.HTTPHeaderIfMatch, 'etag')
-        .get('/etag/etag')
       assert.equal(res.statusCode, 200)
     })
 
-    it('with *', function * () {
-      let res = yield request(app)
+    it('with *', async function () {
+      let res = await request(app)
+        .get('/etag/etag')
         .set(constants.HTTPHeaderIfMatch, '*')
-        .get('/etag/etag')
       assert.equal(res.statusCode, 200)
     })
 
-    it('not match', function * () {
-      let res = yield request(app)
-        .set(constants.HTTPHeaderIfMatch, 'something')
+    it('not match', async function () {
+      let res = await request(app)
         .get('/etag/etag')
+        .set(constants.HTTPHeaderIfMatch, 'something')
       assert.equal(res.statusCode, 412)
     })
   })
 
   describe('If-None-Match', () => {
-    it('normal', function * () {
-      let res = yield request(app)
+    it('normal', async function () {
+      let res = await request(app)
+        .get('/etag/etag')
         .set(constants.HTTPHeaderIfNoneMatch, 'etag')
-        .get('/etag/etag')
       assert.equal(res.statusCode, 304)
       assert.equal(res.headers.etag, 'etag')
     })
 
-    it('with *', function * () {
-      let res = yield request(app)
+    it('with *', async function () {
+      let res = await request(app)
+        .get('/etag/etag')
         .set(constants.HTTPHeaderIfNoneMatch, '*')
-        .get('/etag/etag')
       assert.equal(res.statusCode, 304)
       assert.equal(res.headers.etag, 'etag')
     })
 
-    it('not match', function * () {
-      let res = yield request(app)
-        .set(constants.HTTPHeaderIfNoneMatch, 'something')
+    it('not match', async function () {
+      let res = await request(app)
         .get('/etag/etag')
+        .set(constants.HTTPHeaderIfNoneMatch, 'something')
       assert.equal(res.statusCode, 200)
     })
   })

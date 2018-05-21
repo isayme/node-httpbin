@@ -469,7 +469,8 @@ router.get('/cache', (req, res) => {
 router.get('/cache/:value', (req, res) => {
   const value = req.param('value')
 
-  res.setHeader(constants.HTTPHeaderCacheControl, _.toInteger(value))
+  const cacheControl = `public, max-age=${_.toInteger(value)}`
+  res.setHeader(constants.HTTPHeaderCacheControl, cacheControl)
   res.json({
     args: req.ctx.query,
     headers: req.ctx.headers,
