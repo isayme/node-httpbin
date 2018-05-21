@@ -345,4 +345,11 @@ router.get('/xml', (req, res) => {
   })
 })
 
+router.get('/robots.txt', (res, req) => {
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.txt)
+  res.sendFile('robots.txt', {
+    root: './public'
+  })
+})
+
 module.exports = router
