@@ -9,6 +9,7 @@ const _ = require('lodash')
 const brotli = require('iltorb')
 const accepts = require('accepts')
 const mime = require('mime-types')
+const basicAuth = require('basic-auth')
 const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
 const toInt = require('app/util/toint')
@@ -541,6 +542,39 @@ router.get('/stream-bytes/:n', (req, res) => {
     res.write(crypto.randomBytes(n))
   }
   res.end()
+})
+
+router.get('/basic-auth/:user/:passwd', (req, res) => {
+  const user = req.params.user
+  const passwd = req.params.passwd
+
+  const credentials = basicAuth(req)
+
+  if (!credentials || credentials.name !== user || credentials.pass !== passwd) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="Fake Realm"')
+    res.status(401).end()
+  } else {
+    res.json({
+      user,
+      authenticated: true
+    })
+  }
+})
+
+router.get('/hidden-basic-auth/:user/:passwd', (req, res) => {
+  const user = req.params.user
+  const passwd = req.params.passwd
+
+  const credentials = basicAuth(req)
+
+  if (!credentials || credentials.name !== user || credentials.pass !== passwd) {
+    res.status(404).end()
+  } else {
+    res.json({
+      user,
+      authenticated: true
+    })
+  }
 })
 
 module.exports = router

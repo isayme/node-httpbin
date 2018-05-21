@@ -6,6 +6,7 @@ module.exports = {
   HTTPHeaderIfModifiedSince: 'If-Modified-Since',
   HTTPHeaderLastModified: 'Last-Modified',
   HTTPHeaderCacheControl: 'Cache-Control',
+  HTTPHeaderAuthorization: 'Authorization',
 
   UnKnown: 'unknown'
 }
