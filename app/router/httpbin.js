@@ -383,4 +383,35 @@ router.get('/html', (req, res) => {
   })
 })
 
+router.get('/links/:n/:offset?', (req, res) => {
+  let n = _.toInteger(req.param('n'))
+  if (!_.inRange(n, 0, 200)) {
+    n = 10
+  }
+
+  let offset = req.param('offset')
+  if (_.isUndefined(offset)) {
+    res.redirect(`/links/${n}/0`)
+    return
+  }
+
+  offset = _.toInteger(offset)
+
+  var result = []
+  for (let i = 0; i < n; i++) {
+    if (i === offset) {
+      result.push(`${i}`)
+    } else {
+      result.push(`<a href='/links/${n}/${i}'>${i}</a>`)
+    }
+  }
+
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.html)
+  res.end([
+    '<html><head><title>Links</title></head><body>',
+    result.join(' '),
+    '</body></html>'
+  ].join(''))
+})
+
 module.exports = router
