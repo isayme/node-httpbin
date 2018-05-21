@@ -10,7 +10,6 @@ const partialResponse = require('express-partial-response')
 
 const app = express()
 
-app.use(express.static('public'))
 app.use(require('app/middleware/logger'))
 app.use(require('app/middleware/context'))
 app.use(partialResponse())

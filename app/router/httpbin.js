@@ -11,6 +11,13 @@ const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
 const constants = require('app/constants')
 
+router.get('/', (req, res) => {
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.html)
+  res.sendFile('index.html', {
+    root: './public'
+  })
+})
+
 router.get('/ip', function (req, res) {
   res.json({
     origin: req.ctx.ip
@@ -367,6 +374,13 @@ router.get('/deny', (req, res) => {
   `
   res.setHeader(constants.HTTPHeaderContentType, mime.types.txt)
   res.end(text)
+})
+
+router.get('/html', (req, res) => {
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.html)
+  res.sendFile('moby.html', {
+    root: './public'
+  })
 })
 
 module.exports = router
