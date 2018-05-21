@@ -1,5 +1,7 @@
 const zlib = require('zlib')
 const http = require('http')
+const crypto = require('crypto')
+
 const express = require('express')
 const router = express.Router()
 
@@ -9,6 +11,7 @@ const accepts = require('accepts')
 const mime = require('mime-types')
 const uuid = require('app/util/uuid')
 const base64 = require('app/util/base64')
+const toInt = require('app/util/toint')
 const constants = require('app/constants')
 
 router.get('/', (req, res) => {
@@ -495,6 +498,49 @@ router.get('/delay/:delay', (req, res) => {
       url: req.ctx.url
     })
   }, delay * 1000)
+})
+
+router.get('/stream/:n', (req, res) => {
+  const n = toInt(req.param('n'), {
+    min: 0,
+    max: 100
+  })
+
+  for (let i = 0; i < n; i++) {
+    res.write(JSON.stringify({
+      args: req.ctx.query,
+      headers: req.ctx.headers,
+      origin: req.ctx.ip,
+      url: req.ctx.url
+    }))
+    res.write('\n')
+  }
+  res.end()
+})
+
+router.get('/bytes/:n', (req, res) => {
+  const n = toInt(req.param('n'), {
+    min: 0,
+    max: 100 * 1024 // set 100KB limit
+  })
+
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.bin)
+  res.end(crypto.randomBytes(n))
+})
+
+router.get('/stream-bytes/:n', (req, res) => {
+  const n = toInt(req.param('n'), {
+    min: 0,
+    max: 100 * 1024 // set 100KB limit
+  })
+
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.bin)
+
+  const chunkSize = _.toInteger(req.ctx.query.chunk_size) || 10 * 1024
+  for (let i = 0; i < chunkSize; i++) {
+    res.write(crypto.randomBytes(n))
+  }
+  res.end()
 })
 
 module.exports = router
