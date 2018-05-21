@@ -121,7 +121,7 @@ router.all('/anything/:anything?', function (req, res) {
 })
 
 router.get('/base64/:encoded', (req, res) => {
-  const encoded = req.param('encoded')
+  const encoded = req.params['encoded']
   res.send(base64.decode(encoded))
 })
 
@@ -199,7 +199,7 @@ router.get('/brotli', (req, res, next) => {
 })
 
 router.all('/status/:code', (req, res) => {
-  const code = req.param('code')
+  const code = req.params['code']
 
   const isValidCode = !!http.STATUS_CODES[code]
   if (!isValidCode) {
@@ -224,7 +224,7 @@ router.all('/response-headers', (req, res) => {
 })
 
 router.get(['/redirect/:n', '/relative-redirect/:n', '/absolute-redirect/:n'], (req, res) => {
-  const n = _.toInteger(req.param('n'))
+  const n = _.toInteger(req.params['n'])
 
   if (!_.inRange(n, 1, 16)) {
     res.status(400).end('`n` should be a number in [1, 15]')
@@ -387,12 +387,12 @@ router.get('/html', (req, res) => {
 })
 
 router.get('/links/:n/:offset?', (req, res) => {
-  let n = _.toInteger(req.param('n'))
+  let n = _.toInteger(req.params['n'])
   if (!_.inRange(n, 0, 200)) {
     n = 10
   }
 
-  let offset = req.param('offset')
+  let offset = req.params['offset']
   if (_.isUndefined(offset)) {
     res.redirect(`/links/${n}/0`)
     return
@@ -418,7 +418,7 @@ router.get('/links/:n/:offset?', (req, res) => {
 })
 
 router.get('/etag/:etag', (req, res) => {
-  const etag = req.param('etag')
+  const etag = req.params['etag']
 
   const ifMatch = req.header(constants.HTTPHeaderIfMatch)
   if (ifMatch) {
@@ -470,7 +470,7 @@ router.get('/cache', (req, res) => {
 })
 
 router.get('/cache/:value', (req, res) => {
-  const value = req.param('value')
+  const value = req.params['value']
 
   const cacheControl = `public, max-age=${_.toInteger(value)}`
   res.setHeader(constants.HTTPHeaderCacheControl, cacheControl)
@@ -483,7 +483,7 @@ router.get('/cache/:value', (req, res) => {
 })
 
 router.get('/delay/:delay', (req, res) => {
-  let delay = _.toInteger(req.param('delay'))
+  let delay = _.toInteger(req.params['delay'])
   delay = _.min([delay, 10])
 
   setTimeout(() => {
@@ -501,7 +501,7 @@ router.get('/delay/:delay', (req, res) => {
 })
 
 router.get('/stream/:n', (req, res) => {
-  const n = toInt(req.param('n'), {
+  const n = toInt(req.params['n'], {
     min: 0,
     max: 100
   })
@@ -519,7 +519,7 @@ router.get('/stream/:n', (req, res) => {
 })
 
 router.get('/bytes/:n', (req, res) => {
-  const n = toInt(req.param('n'), {
+  const n = toInt(req.params['n'], {
     min: 0,
     max: 100 * 1024 // set 100KB limit
   })
@@ -529,7 +529,7 @@ router.get('/bytes/:n', (req, res) => {
 })
 
 router.get('/stream-bytes/:n', (req, res) => {
-  const n = toInt(req.param('n'), {
+  const n = toInt(req.params['n'], {
     min: 0,
     max: 100 * 1024 // set 100KB limit
   })
