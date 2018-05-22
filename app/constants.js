@@ -7,6 +7,8 @@ module.exports = {
   HTTPHeaderLastModified: 'Last-Modified',
   HTTPHeaderCacheControl: 'Cache-Control',
   HTTPHeaderAuthorization: 'Authorization',
+  HTTPHeaderContentEncoding: 'Content-Encoding',
+  HTTPHeaderContentLength: 'Content-Length',
 
   UnKnown: 'unknown'
 }

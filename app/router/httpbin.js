@@ -134,8 +134,8 @@ router.get('/encoding/utf8', (req, res) => {
 })
 
 router.get('/gzip', (req, res, next) => {
-  res.setHeader('Content-Encoding', 'gzip')
-  res.removeHeader('Content-Length')
+  res.setHeader(constants.HTTPHeaderContentEncoding, 'gzip')
+  res.removeHeader(constants.HTTPHeaderContentLength)
   res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   zlib.gzip(
@@ -156,8 +156,8 @@ router.get('/gzip', (req, res, next) => {
 })
 
 router.get('/deflate', (req, res, next) => {
-  res.setHeader('Content-Encoding', 'deflate')
-  res.removeHeader('Content-Length')
+  res.setHeader(constants.HTTPHeaderContentEncoding, 'deflate')
+  res.removeHeader(constants.HTTPHeaderContentLength)
   res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   zlib.deflate(
@@ -178,8 +178,8 @@ router.get('/deflate', (req, res, next) => {
 })
 
 router.get('/brotli', (req, res, next) => {
-  res.setHeader('Content-Encoding', 'br')
-  res.removeHeader('Content-Length')
+  res.setHeader(constants.HTTPHeaderContentEncoding, 'br')
+  res.removeHeader(constants.HTTPHeaderContentLength)
   res.setHeader(constants.HTTPHeaderContentType, mime.types.json)
 
   brotli.compress(

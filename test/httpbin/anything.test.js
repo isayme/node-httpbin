@@ -19,3 +19,11 @@ describe('/anything', () => {
     assert.equal(res.body.json.k, 'v')
   })
 })
+
+describe('/anything/:anything', () => {
+  it('ok', async function () {
+    let res = await request(app)
+      .get('/anything/abc')
+    assert.equal(res.statusCode, 200)
+  })
+})
