@@ -577,4 +577,11 @@ router.get('/hidden-basic-auth/:user/:passwd', (req, res) => {
   }
 })
 
+router.get('/forms/post', (req, res) => {
+  res.setHeader(constants.HTTPHeaderContentType, mime.types.html)
+  res.sendFile('forms-post.html', {
+    root: './public'
+  })
+})
+
 module.exports = router
