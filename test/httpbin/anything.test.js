@@ -1,6 +1,8 @@
 const request = require('supertest')
 const assert = require('power-assert')
 const app = require('app/app')
+const constants = require('app/constants')
+const mime = require('mime-types')
 
 describe('/anything', () => {
   it('get', async function () {
@@ -25,5 +27,16 @@ describe('/anything/:anything', () => {
     let res = await request(app)
       .get('/anything/abc')
     assert.equal(res.statusCode, 200)
+  })
+
+  it('text', async function () {
+    let res = await request(app)
+      .get('/anything/abc')
+      .set({
+        [constants.HTTPHeaderContentType]: mime.types.txt
+      })
+      .send('hi')
+    assert.equal(res.statusCode, 200)
+    assert.equal(res.body.data, 'hi')
   })
 })
