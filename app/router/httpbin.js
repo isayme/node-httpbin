@@ -22,6 +22,18 @@ router.get('/', (req, res) => {
   })
 })
 
+router.get('/favicon.ico', (req, res) => {
+  res.sendFile('favicon.ico', {
+    root: './public'
+  })
+})
+
+router.get('/favicon.png', (req, res) => {
+  res.sendFile('favicon.png', {
+    root: './public'
+  })
+})
+
 router.get('/ip', function (req, res) {
   res.json({
     origin: req.ctx.ip
