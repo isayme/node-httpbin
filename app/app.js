@@ -10,6 +10,8 @@ const partialResponse = require('express-partial-response')
 
 const app = express()
 
+// for x-forwarded-proto
+app.set('trust proxy', true)
 app.use(require('app/middleware/logger'))
 app.use(require('app/middleware/context'))
 app.use(partialResponse())
