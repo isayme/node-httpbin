@@ -42,6 +42,7 @@
     "cors": "^2.8.4",
     "express": "^4.16.3",
     "express-partial-response": "^0.3.4",
+    "express-prettify": "^0.1.0",
     "iltorb": "^2.3.2",
     "lodash": "^4.17.10",
     "mime-types": "^2.1.18",
