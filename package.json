@@ -1,6 +1,6 @@
 {
   "name": "@isayme/httpbin",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "a express application boilerplate",
   "main": "app/app.js",
   "directories": {
